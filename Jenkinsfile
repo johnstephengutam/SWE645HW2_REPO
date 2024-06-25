@@ -17,7 +17,7 @@ pipeline {
 					checkout scm
 					sh 'cp index.html /var/www/html/'
 					sh 'echo ${BUILD_TIMESTAMP}'
-					sh "docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
+					sh "sudo docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
 					def customImage = docker.build("johnstephengutam/mywebapp:${BUILD_TIMESTAMP}")
 				}
 			}
@@ -25,7 +25,7 @@ pipeline {
 		stage("Pushing Image to DockerHub"){
 			steps{
 				script{
-					sh "docker push johnstephengutam/mywebapp:${BUILD_TIMESTAMP}"
+					sh "sudo docker push johnstephengutam/mywebapp:${BUILD_TIMESTAMP}"
 				}
 			}
 		}
