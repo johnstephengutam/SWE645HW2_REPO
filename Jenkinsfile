@@ -24,7 +24,7 @@ pipeline {
 			                	//sh "docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
 						sh "echo ${DOCKERHUB_PASS} | docker login -u johnstephengutam --password-stdin"
 			                        
-						def env.BUILD_TIMESTAMP = "${BUILD_TIMESTAMP}".replaceAll(/[^\w.-]/, '-')
+						env.BUILD_TIMESTAMP = "${BUILD_TIMESTAMP}".replaceAll(/[^\w.-]/, '-')
            				 	def customImageTag = "johnstephengutam/mywebapp:${env.BUILD_TIMESTAMP}"
             					def customImage = docker.build(customImageTag)
 			                }
