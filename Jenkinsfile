@@ -4,6 +4,13 @@ pipeline {
 		DOCKERHUB_PASS = credentials('dockerhub')
 	}
 	stages {
+
+		stage("Check Workspace") {
+            		steps {
+                		sh 'pwd'  // Print current directory (workspace)
+                		sh 'ls'   // List files in current directory (workspace)
+            		}
+        	}
 		stage("Building the Student Survey Image"){
 			steps{
 				script{
