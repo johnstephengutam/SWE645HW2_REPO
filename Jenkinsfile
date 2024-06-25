@@ -15,7 +15,7 @@ pipeline {
 			steps{
 				script{
 					checkout scm
-					sh 'cp index.html /var/www/html/'
+					//sh 'cp index.html /var/www/html/'
 					sh 'echo ${BUILD_TIMESTAMP}'
 					//sh "sudo docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
 
