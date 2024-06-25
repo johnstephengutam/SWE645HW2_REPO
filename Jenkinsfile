@@ -24,8 +24,8 @@ pipeline {
 			                	//sh "docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
 						sh "echo ${DOCKERHUB_PASS} | docker login -u johnstephengutam --password-stdin"
 			                        
-						def buildTimestamp = "${BUILD_TIMESTAMP}".replaceAll(/[^\w.-]/, '-')
-           				 	def customImageTag = "johnstephengutam/mywebapp:${buildTimestamp}"
+						def env.BUILD_TIMESTAMP = "${BUILD_TIMESTAMP}".replaceAll(/[^\w.-]/, '-')
+           				 	def customImageTag = "johnstephengutam/mywebapp:${env.BUILD_TIMESTAMP}"
             					def customImage = docker.build(customImageTag)
 			                }
 				}
@@ -34,13 +34,13 @@ pipeline {
 		stage("Pushing Image to DockerHub"){
 			steps{
 				script{
-					sh "docker push johnstephengutam/mywebapp:${BUILD_TIMESTAMP}"
+					sh "docker push johnstephengutam/mywebapp:${env.BUILD_TIMESTAMP}"
 				}
 			}
 		}
 		stage("Deploying to Rancher as single pod"){
 			steps{
-				sh 'kubectl set image deployment/hw2-deployment container-0=johnstephengutam/mywebapp:${BUILD_TIMESTAMP}'
+				sh 'kubectl set image deployment/hw2-deployment container-0=johnstephengutam/mywebapp:${env.BUILD_TIMESTAMP}'
 			}
 		}
 	}
