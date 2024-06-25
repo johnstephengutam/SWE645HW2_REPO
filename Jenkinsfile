@@ -40,7 +40,7 @@ pipeline {
 		}
 		stage("Deploying to Rancher as single pod"){
 			steps{
-				sh 'kubectl set image deployment/hw2-deployment container-0=johnstephengutam/mywebapp:${env.BUILD_TIMESTAMP}'
+				sh "kubectl set image deployment/hw2-deployment container-0=johnstephengutam/mywebapp:${env.BUILD_TIMESTAMP}"
 			}
 		}
 	}
