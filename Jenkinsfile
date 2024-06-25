@@ -24,9 +24,8 @@ pipeline {
 			                	//sh "docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
 						sh "echo ${DOCKERHUB_PASS} | docker login -u johnstephengutam --password-stdin"
 			                        
-						//def buildTimestamp = "${BUILD_TIMESTAMP}".replaceAll(/[^\w.-]/, '-')
-           				 	//def customImageTag = "johnstephengutam/mywebapp:${buildTimestamp}"
-						def customImageTag = "johnstephengutam/mywebapp:2.0"
+						def buildTimestamp = "${BUILD_TIMESTAMP}".replaceAll(/[^\w.-]/, '-')
+           				 	def customImageTag = "johnstephengutam/mywebapp:${buildTimestamp}"
             					def customImage = docker.build(customImageTag)
 			                }
 				}
@@ -35,8 +34,7 @@ pipeline {
 		stage("Pushing Image to DockerHub"){
 			steps{
 				script{
-					//sh "docker push johnstephengutam/mywebapp:${BUILD_TIMESTAMP}"
-					sh "docker push johnstephengutam/mywebapp:2.0"
+					sh "docker push johnstephengutam/mywebapp:${BUILD_TIMESTAMP}"
 				}
 			}
 		}
