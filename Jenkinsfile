@@ -25,8 +25,6 @@ pipeline {
 						sh "echo ${DOCKERHUB_PASS} | docker login -u johnstephengutam --password-stdin"
 			                        def customImage = docker.build("johnstephengutam/mywebapp:${BUILD_TIMESTAMP}")
 			                }
-					
-					def customImage = docker.build("johnstephengutam/mywebapp:${BUILD_TIMESTAMP}")
 				}
 			}
 		}
