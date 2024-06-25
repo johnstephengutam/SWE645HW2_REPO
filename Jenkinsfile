@@ -17,7 +17,14 @@ pipeline {
 					checkout scm
 					sh 'cp index.html /var/www/html/'
 					sh 'echo ${BUILD_TIMESTAMP}'
-					sh "sudo docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
+					//sh "sudo docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
+
+					// Use Jenkins credentials binding to securely login to DockerHub
+			                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
+			                	sh "docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
+			                        def customImage = docker.build("johnstephengutam/mywebapp:${BUILD_TIMESTAMP}")
+			                }
+					
 					def customImage = docker.build("johnstephengutam/mywebapp:${BUILD_TIMESTAMP}")
 				}
 			}
@@ -25,7 +32,7 @@ pipeline {
 		stage("Pushing Image to DockerHub"){
 			steps{
 				script{
-					sh "sudo docker push johnstephengutam/mywebapp:${BUILD_TIMESTAMP}"
+					sh "docker push johnstephengutam/mywebapp:${BUILD_TIMESTAMP}"
 				}
 			}
 		}
