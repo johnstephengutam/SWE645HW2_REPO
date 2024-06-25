@@ -21,7 +21,8 @@ pipeline {
 
 					// Use Jenkins credentials binding to securely login to DockerHub
 			                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
-			                	sh "docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
+			                	//sh "docker login -u johnstephengutam -p ${DOCKERHUB_PASS}"
+						sh "echo ${DOCKERHUB_PASS} | docker login -u johnstephengutam --password-stdin"
 			                        def customImage = docker.build("johnstephengutam/mywebapp:${BUILD_TIMESTAMP}")
 			                }
 					
